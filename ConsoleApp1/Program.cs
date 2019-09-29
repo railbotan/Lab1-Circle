@@ -12,7 +12,7 @@ namespace ConsoleApp1
 
         static double Delta;
 
-        static double OurFunc(double x)
+        static double Func(double x)
         {
             return x * x * x + 4 * x - 4;
         }
@@ -37,31 +37,38 @@ namespace ConsoleApp1
 
         public static bool CheckInterval(double a, double b)
         {
-            return OurFunc(a) * OurFunc(b) < 0;
+            return Func(a) * Func(b) < 0;
         }
 
         public static bool CheckFinish(double a, double b)
         {
-            return Math.Abs(OurFunc(a) - OurFunc(b)) < Delta || Math.Abs(a - b) < Delta;
+            return Math.Abs(Func(a) - Func(b)) < Delta || Math.Abs(a - b) < Delta;
         }
 
         public static double GenerateAnswer(params double[] args)
         {
-            return args.Select(x => (Value: x, FuncResult: Math.Abs(OurFunc(x))))
+            return args.Select(x => (Value: x, FuncResult: Math.Abs(Func(x))))
             .OrderBy(x => x.FuncResult)
             .First().Value;
         }
 
         static void Main(string[] args)
         {
+            Console.WriteLine("Метод деления отрезка пополам.");
             Console.WriteLine("Введите погрешность:");
             Delta = double.Parse(Console.ReadLine().Replace(".", ","));
             Console.WriteLine("Введите начало интервала:");
             var a = double.Parse(Console.ReadLine().Replace(".", ","));
             Console.WriteLine("Введите конец интервала:");
             var b = double.Parse(Console.ReadLine().Replace(".", ","));
+            if (!CheckInterval(a, b))
+            {
+                Console.WriteLine("Введен неверный интервал!");
+                Console.ReadKey();
+                return;
+            }
             var x = FirstAlgoritm(a, b);
-            Console.WriteLine("Ответ {0}", Math.Round(x, Delta.ToString().Length - 2));
+            Console.WriteLine("Ответ {0}", Math.Round(x / Delta) * Delta);
             Console.ReadKey();
         }
     }
