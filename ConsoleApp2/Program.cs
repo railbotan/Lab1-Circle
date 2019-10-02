@@ -41,18 +41,13 @@ namespace ConsoleApp2
 
         static void Main(string[] args)
         {
+            Console.WriteLine("Метод касательных.");
             Console.WriteLine("Введите погрешность:");
             Delta = double.Parse(Console.ReadLine().Replace(".", ","));
             Console.WriteLine("Введите начало интервала:");
             var a = double.Parse(Console.ReadLine().Replace(".", ","));
             Console.WriteLine("Введите конец интервала:");
             var b = double.Parse(Console.ReadLine().Replace(".", ","));
-            if (Func(a) * Func(b) >= 0)
-            {
-                Console.WriteLine("Введен неверный интервал!");
-                Console.ReadKey();
-                return;
-            }
             var x = SecondAlgoritm(GetInitial(a, b));
             Console.WriteLine("Ответ {0}", Math.Round(x / Delta) * Delta);
             Console.ReadKey();
